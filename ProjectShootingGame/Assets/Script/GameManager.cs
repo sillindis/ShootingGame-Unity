@@ -25,14 +25,19 @@ public class GameManager : MonoBehaviour
     public Image[] boomImage;
     public GameObject gameOverSet;
     public GameObject gameClearSet;
+    public GameObject gamePauseSet;
     public ObjectManager objectManager;
 
     public List<Spawn> spawnList;
     public int spawnIndex;
     public bool spawnEnd;
+    
+    bool IsPause;
 
     private void Awake()
     {
+        Time.timeScale = 1;
+        IsPause = false;
         spawnList = new List<Spawn>();
         enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL", "EnemyB" };
         StageStart();
@@ -231,18 +236,50 @@ public class GameManager : MonoBehaviour
         playerLogic.isHit = false;
     }
 
+    public void Pause()
+    {
+        if (IsPause != false)
+            return;
+
+        Time.timeScale = 0;
+        IsPause = true;
+        gamePauseSet.SetActive(true);
+    }
+
+    public void PauseCancle()
+    {
+        if (IsPause != true)
+            return;
+
+        Time.timeScale = 1;
+        IsPause = false;
+        gamePauseSet.SetActive(false);
+    }
+
     public void GameOver()
     {
         gameOverSet.SetActive(true);
+        Invoke("PauseDelay", 2);
     }
 
     public void AllClear()
     {
         gameClearSet.SetActive(true);
+        Invoke("PauseDelay", 2);
+    }
+    public void PauseDelay()
+    {
+        Time.timeScale = 0;
+        //IsPause = true;
     }
 
     public void GameRetry()
     {
         SceneManager.LoadScene("GamePlay");
+    }
+
+    public void GameHome()
+    {
+        SceneManager.LoadScene("StartScreen");
     }
 }

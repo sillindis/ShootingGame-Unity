@@ -100,7 +100,7 @@ MonoBehaviour:
   enemyName: B
   enemyScore: 5000
   speed: 1.5
-  health: 2000
+  health: 1000
   maxShotDelay: 0
   curShotDelay: 0
   bulletObjA: {fileID: 0}
@@ -111,6 +111,7 @@ MonoBehaviour:
   itemHealPack: {fileID: 0}
   player: {fileID: 0}
   objectManager: {fileID: 0}
+  gameManager: {fileID: 0}
   patternIndex: -1
   curPatternCount: 0
   maxPatternCount: 0200000003000000640000000a000000
