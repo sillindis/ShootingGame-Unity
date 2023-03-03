@@ -7,6 +7,8 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance = null;
+
     public int stage;
     public Animator stageAnim;
     public Animator clearAnim;
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
+
         Time.timeScale = 1;
         IsPause = false;
         spawnList = new List<Spawn>();
@@ -280,6 +284,6 @@ public class GameManager : MonoBehaviour
 
     public void GameHome()
     {
-        SceneManager.LoadScene("StartScreen");
+        SceneManager.LoadScene("Lobby");
     }
 }
