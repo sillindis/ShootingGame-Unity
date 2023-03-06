@@ -7,13 +7,12 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance = null;
-
     public int stage;
     public Animator stageAnim;
     public Animator clearAnim;
     public Animator fadeAnim;
     public Transform playerPos;
+    string tsxtFileString;
 
     public string[] enemyObjs;
     public Transform[] spawnPoints;
@@ -38,7 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        //Lobby에서 가져온 stage file 이름 가져오기
+        tsxtFileString = PlayerPrefs.GetString("TextFile");
 
         Time.timeScale = 1;
         IsPause = false;
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         //#.Stage UI Load
         stageAnim.SetTrigger("OnText");
-        stageAnim.GetComponent<Text>().text = "Stage " + stage;
+        stageAnim.GetComponent<Text>().text = tsxtFileString;
         clearAnim.GetComponent<Text>().text = "Clear !";
 
         //#.Enemy Spawn File Read
@@ -73,12 +73,12 @@ public class GameManager : MonoBehaviour
         playerPos.transform.position = playerPos.position;
 
         //#.Stage Increament
-        stage++;
+        //stage++;
 
-        if (stage > 2) //All Clear
+        //if (stage > 2) //All Clear
             Invoke("AllClear", 4);
-        else
-            Invoke("StageStart", 5);
+        //else
+        //    Invoke("StageStart", 5);
     }
 
     void ReadSpawnFile()
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
         spawnEnd = false;
 
         //#2. Read respawn file
-        TextAsset textFile = Resources.Load("STAGE "+ stage) as TextAsset;
+        TextAsset textFile = Resources.Load(tsxtFileString) as TextAsset;
         StringReader stringReader = new StringReader(textFile.text);
 
         while(stringReader != null)

@@ -2,25 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviour
 {
-    GameManager gameManager;
-
     public GameObject homePopUp;
     public GameObject gameStartPopUp;
     bool IsPause;
+
+    string stageName;
 
     // Start is called before the first frame update
     void Start()
     {
         IsPause = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void HomePopUp()
@@ -51,6 +47,15 @@ public class LobbyManager : MonoBehaviour
         Time.timeScale = 0;
         IsPause = true;
         gameStartPopUp.SetActive(true);
+
+        //클릭한 icon의 이름을 가져오기
+        GameObject clickObj = EventSystem.current.currentSelectedGameObject;
+        stageName = clickObj.name;
+
+        //gameStartPopUp의 UI text를 변경
+        GameObject child = gameStartPopUp.transform.GetChild(0).gameObject;
+        Text childText = child.GetComponent<Text>();
+        childText.text = "Fly " + stageName +"?";
     }
 
     public void GameStartPopUpCancle()
@@ -70,6 +75,7 @@ public class LobbyManager : MonoBehaviour
 
     public void GoGameScenes()
     {
+        PlayerPrefs.SetString("TextFile", stageName); //Stage 파일 이름 넘겨주기
         SceneManager.LoadScene("GamePlay");
     }
 }
