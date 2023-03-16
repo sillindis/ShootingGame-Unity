@@ -2,31 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System;
 
 public class DataManager : MonoBehaviour
 {
-    static GameObject _container;
-    static DataManager instance = null;
-    public string gameDataFileName = ".json";
+    static GameObject container;
+    static DataManager instance;
+    string dataFileName = "GameData.json"; //게임 데이터 파일이름 설정
+    public Data data = new Data(); //저장용 변수
 
-    static GameObject Container
-    {
-        get
-        {
-            return _container;
-        }
-    }
     public static DataManager Instance
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
-                _container = new GameObject();
-                _container.name = "DataManager";
-                instance = _container.AddComponent(typeof(DataManager)) as DataManager;
-                DontDestroyOnLoad(_container);
+                container = new GameObject();
+                container.name = "DataManager";
+                instance = container.AddComponent(typeof(DataManager)) as DataManager;
+                DontDestroyOnLoad(container);
             }
             return instance;
         }
@@ -34,24 +27,27 @@ public class DataManager : MonoBehaviour
 
     public void LoadGameData()
     {
-        string filePath = Application.persistentDataPath + gameDataFileName;
+        string filePath = Application.streamingAssetsPath + "/" + dataFileName;
 
         if (File.Exists(filePath))
         {
-            Debug.Log("불러오기 성공!");
+            string fromJsonData = File.ReadAllText(filePath);
+            data = JsonUtility.FromJson<Data>(fromJsonData);
+            Debug.Log("데이터 불러오기 완료");
+        }
+        else
+        {
+            Debug.LogError("데이터 불러오기 실패");
         }
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    public void SaveGameData()
     {
-        
-    }
+        string toJsonData = JsonUtility.ToJson(data, true);
+        string filePath = Application.streamingAssetsPath + "/" + dataFileName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        File.WriteAllText(filePath, toJsonData);
+
+        Debug.Log("데이터 저장완료");
     }
 }
