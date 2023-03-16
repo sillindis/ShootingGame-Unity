@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviour
 {
+    public GameObject[] stages;
+    public GameObject coin;
     public GameObject homePopUp;
     public GameObject gameStartPopUp;
     bool IsPause;
@@ -17,6 +19,19 @@ public class LobbyManager : MonoBehaviour
     void Start()
     {
         IsPause = false;
+
+        //stage 업데이트
+        for(int i = 0; i < stages.Length; i++)
+        {
+            if (DataManager.Instance.data.stageUnlock[i] == true)
+            {
+                stages[i].SetActive(true);
+            }
+        }
+
+        //coin 업데이트
+        Text coinText = coin.GetComponent<Text>();
+        coinText.text = (DataManager.Instance.data.coin).ToString();
     }
 
     public void HomePopUp()
@@ -70,6 +85,7 @@ public class LobbyManager : MonoBehaviour
 
     public void GoHomeScenes()
     {
+        DataManager.Instance.SaveGameData();
         SceneManager.LoadScene("StartScreen");
     }
 

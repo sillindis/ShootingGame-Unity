@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour
                 health = 10;
                 break;
         }
+        ReturnSprite();
     }
     void Stop()
     {
@@ -269,26 +270,26 @@ public class Enemy : MonoBehaviour
             //#.Random Ratio Item Drop
             int ran = enemyName == "B" ? 0 : Random.Range(0, 20); //boss not drop
 
-            if (ran < 12)
+            if (ran < 9)
             {
                 //None
             }
-            else if(ran < 17) //Coin 25%
+            else if(ran < 14) //Coin 25%
             {
                 GameObject itemCoin = objectManager.MakeObj("ItemCoin");
                 itemCoin.transform.position = transform.position;
             }
-            else if (ran < 18) //Power 5%
+            else if (ran < 16) //Power 10%
             {
                 GameObject itemPower = objectManager.MakeObj("ItemPower");
                 itemPower.transform.position = transform.position;
             }
-            else if (ran < 19) //Boom 5%
+            else if (ran < 18) //Boom 10%
             {
                 GameObject itemBoom = objectManager.MakeObj("ItemBoom");
                 itemBoom.transform.position = transform.position;
             }
-            else if (ran < 20) //HealPack 5%
+            else if (ran < 20) //HealPack 10%
             {
                 GameObject itemHealPack = objectManager.MakeObj("ItemHealPack");
                 itemHealPack.transform.position = transform.position;

@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     public bool isHit;
 
     public int life;
-    public int score;
+    public double score;
+    public double coin;
     public float speed;
     public int power;
     public int maxPower;
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
     public int boom;
     public int maxBoom;
     public bool isBoomButton;
-    
+
 
     public GameObject bulletObjA;
     public GameObject bulletObjB;
@@ -40,11 +41,13 @@ public class Player : MonoBehaviour
     private Vector3 inputPosition; // 터치의 월드 포지션
     private Vector2 moveDir; // 화면 터치 시 비행기 이동 방향
 
-
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid2D = GetComponent<Rigidbody2D>();
+
+        score = 0;
+        coin = 0;
     }
 
     private void OnEnable() //function that works when a player is activated
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("coin: " + coin);
         Move();
         Move1();
         Fire(); //Shot Bullet
@@ -81,49 +85,50 @@ public class Player : MonoBehaviour
     private void Move1()
     {
         if (rigid2D == null || Input.touchCount < 1) // 강체가 없거나 터치가 없으면 리턴
-            return; 
+            return;
         moveDir = Vector2.zero;  // 방향 초기화
 
-        if(Input.GetTouch(0).phase == TouchPhase.Began) 
-        { 
-            inputPosition = GetInputPosition(Input.GetTouch(0).position); 
-            if (Vector3.Distance(transform.position, inputPosition) > .2f) 
-            { 
+        if (Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            inputPosition = GetInputPosition(Input.GetTouch(0).position);
+            if (Vector3.Distance(transform.position, inputPosition) > .2f)
+            {
                 isFar = true; // 비행기와 터치 사이의 거리가 먼 상태
-            } 
-        } 
-        if(Input.GetTouch(0).phase == TouchPhase.Ended) 
-        { 
-            isFar = false; 
-        } 
-        if(Input.GetTouch(0).phase == TouchPhase.Moved) 
-        { 
-            inputPosition = GetInputPosition(Input.GetTouch(0).position); 
+            }
+        }
+        if (Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            isFar = false;
+        }
+        if (Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            inputPosition = GetInputPosition(Input.GetTouch(0).position);
             if (isFar) // 거리가 먼 상태
-            { 
+            {
                 moveDir = GetDirection(transform.position, inputPosition); // 터치와 비행기 거리를 체크
                 isFar = (Vector3.Distance(transform.position, inputPosition) > .2f);
             }
             else // 터치에 가까운 상태
-            { 
-                transform.position = inputPosition; 
-            } 
-        } rigid2D.velocity = moveDir * moveSpeed; // 방향에 속도를 곱해서 강체에 적용
+            {
+                transform.position = inputPosition;
+            }
+        }
+        rigid2D.velocity = moveDir * moveSpeed; // 방향에 속도를 곱해서 강체에 적용
     }
 
     // 터치의 스크린 포지션을 월드 포지션으로 변경
-    public Vector3 GetInputPosition(Vector3 position) 
-    { 
-        Vector3 screenPosition = position + (Vector3.back * Camera.main.transform.position.z); 
-        return Camera.main.ScreenToWorldPoint(screenPosition); 
+    public Vector3 GetInputPosition(Vector3 position)
+    {
+        Vector3 screenPosition = position + (Vector3.back * Camera.main.transform.position.z);
+        return Camera.main.ScreenToWorldPoint(screenPosition);
     }
 
     // 두 포지션 사이의 방향
-    public Vector2 GetDirection(Vector2 from, Vector2 to) 
+    public Vector2 GetDirection(Vector2 from, Vector2 to)
     {
-        Vector2 delta = to - from; 
-        float radian = Mathf.Atan2(delta.y, delta.x); 
-        return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian)); 
+        Vector2 delta = to - from;
+        float radian = Mathf.Atan2(delta.y, delta.x);
+        return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
     }
     //
 
@@ -183,7 +188,7 @@ public class Player : MonoBehaviour
                 rigidLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
         }
-        
+
 
         curShotDelay = 0; //Initialization
     }
@@ -244,7 +249,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) //If player touches the border
     {
-        if(collision.gameObject.tag == "Border")
+        if (collision.gameObject.tag == "Border")
         {
             switch (collision.gameObject.name)
             {
@@ -262,7 +267,7 @@ public class Player : MonoBehaviour
                     break;
             }
         }
-        else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
+        else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
             if (isRespawnTime)
                 return;
@@ -285,18 +290,18 @@ public class Player : MonoBehaviour
             {
                 gameManager.RespawnPlayer();
             }
-            
+
             gameObject.SetActive(false);
             collision.gameObject.SetActive(false);
-            
+
         }
-        else if(collision.gameObject.tag == "Item")
+        else if (collision.gameObject.tag == "Item")
         {
             Item item = collision.gameObject.GetComponent<Item>();
             switch (item.type)
             {
                 case "Coin":
-                    score += 1000;
+                    coin += 10;
                     break;
                 case "Power":
                     if (power >= maxPower)
@@ -309,8 +314,8 @@ public class Player : MonoBehaviour
                         score += 200;
                     else
                     {
-                       boom++;
-                       gameManager.UpdateBoomIcon(boom);
+                        boom++;
+                        gameManager.UpdateBoomIcon(boom);
                     }
                     break;
                 case "HealPack":

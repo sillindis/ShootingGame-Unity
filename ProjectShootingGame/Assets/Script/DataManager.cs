@@ -9,6 +9,7 @@ public class DataManager : MonoBehaviour
     static DataManager instance;
     string dataFileName = "GameData.json"; //게임 데이터 파일이름 설정
     public Data data = new Data(); //저장용 변수
+    //public Data data = new Data(); //저장용 변수
 
     public static DataManager Instance
     {
@@ -28,6 +29,7 @@ public class DataManager : MonoBehaviour
     public void LoadGameData()
     {
         string filePath = Application.streamingAssetsPath + "/" + dataFileName;
+        Debug.Log(filePath);
 
         if (File.Exists(filePath))
         {
@@ -46,8 +48,18 @@ public class DataManager : MonoBehaviour
         string toJsonData = JsonUtility.ToJson(data, true);
         string filePath = Application.streamingAssetsPath + "/" + dataFileName;
 
+        Debug.Log(toJsonData);//json 데이터 출력
+
+        //이미 저장된 파일이 있다면 덮어쓰기
         File.WriteAllText(filePath, toJsonData);
 
         Debug.Log("데이터 저장완료");
+    }
+
+    private void OnApplicationQuit()
+    {
+        DataManager.Instance.SaveGameData();
+
+        Debug.Log("게임종료");
     }
 }

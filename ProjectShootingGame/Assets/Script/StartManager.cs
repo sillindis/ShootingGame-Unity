@@ -20,6 +20,7 @@ public class StartManager : MonoBehaviour
         Invoke("PlayerStop", 2);
         Invoke("StartAnim", 3);
         Invoke("ExitSet", 3);
+        DataManager.Instance.LoadGameData();
     }
 
     void PlayerStop()

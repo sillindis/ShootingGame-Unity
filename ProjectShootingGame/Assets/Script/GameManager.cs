@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Animator clearAnim;
     public Animator fadeAnim;
     public Transform playerPos;
-    string tsxtFileString;
+    string textFileString;
 
     public string[] enemyObjs;
     public Transform[] spawnPoints;
@@ -32,13 +32,20 @@ public class GameManager : MonoBehaviour
     public List<Spawn> spawnList;
     public int spawnIndex;
     public bool spawnEnd;
-    
+
     bool IsPause;
+    bool bossCheck;
+    bool endFlag;
 
     private void Awake()
     {
+        bossCheck = false;
+        endFlag = false;
+
         //Lobby에서 가져온 stage file 이름 가져오기
-        tsxtFileString = PlayerPrefs.GetString("TextFile");
+        textFileString = PlayerPrefs.GetString("TextFile");
+        string[] stageSting = textFileString.Split(' ');
+        stage = int.Parse(stageSting[1]);
 
         Time.timeScale = 1;
         IsPause = false;
@@ -51,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         //#.Stage UI Load
         stageAnim.SetTrigger("OnText");
-        stageAnim.GetComponent<Text>().text = tsxtFileString;
+        stageAnim.GetComponent<Text>().text = textFileString;
         clearAnim.GetComponent<Text>().text = "Clear !";
 
         //#.Enemy Spawn File Read
@@ -76,7 +83,7 @@ public class GameManager : MonoBehaviour
         //stage++;
 
         //if (stage > 2) //All Clear
-            Invoke("AllClear", 4);
+        Invoke("AllClear", 4);
         //else
         //    Invoke("StageStart", 5);
     }
@@ -89,10 +96,11 @@ public class GameManager : MonoBehaviour
         spawnEnd = false;
 
         //#2. Read respawn file
-        TextAsset textFile = Resources.Load(tsxtFileString) as TextAsset;
+        TextAsset textFile = Resources.Load(textFileString) as TextAsset;
         StringReader stringReader = new StringReader(textFile.text);
 
-        while(stringReader != null)
+
+        while (stringReader != null)
         {
             string line = stringReader.ReadLine();
             Debug.Log(line);
@@ -106,13 +114,16 @@ public class GameManager : MonoBehaviour
             spawnData.type = line.Split(',')[1];
             spawnData.point = int.Parse(line.Split(',')[2]);
             spawnList.Add(spawnData);
+
+            if (spawnData.type == "B")
+                bossCheck = true;
         }
 
         //#. Close text file
         stringReader.Close();
 
         //#.Spawn delay
-        nextSpawnDelay = spawnList[0].delay;
+        //nextSpawnDelay = spawnList[0].delay;
     }
 
     // public 
@@ -126,6 +137,12 @@ public class GameManager : MonoBehaviour
             curSpawnDelay = 0;
         }
 
+        if (endFlag == false && (spawnEnd == true) && (bossCheck == false) && (curSpawnDelay > 5.0f))
+        {
+            StageEnd();
+            endFlag = true;
+        }
+
         //#.UI Score Update
         Player playerLogic = player.GetComponent<Player>();
         scoreText.text = string.Format("{0:n0}", playerLogic.score);
@@ -134,7 +151,7 @@ public class GameManager : MonoBehaviour
     void SpawnEnemy()
     {
         int enemyIndex = 0;
-        switch(spawnList[spawnIndex].type)
+        switch (spawnList[spawnIndex].type)
         {
             case "S":
                 enemyIndex = 0;
@@ -268,6 +285,15 @@ public class GameManager : MonoBehaviour
 
     public void AllClear()
     {
+        Player playerLogic = player.GetComponent<Player>();
+
+        DataManager.Instance.data.coin += playerLogic.coin; //coin 업데이트
+        DataManager.Instance.data.stageScore[stage - 1] = playerLogic.score; // 인덱스 맞추기 위해 -1함
+        if (stage < DataManager.Instance.data.stageUnlock.Length) // 다음 스테이지 오픈
+        {
+            DataManager.Instance.data.stageUnlock[stage] = true;
+        }
+
         gameClearSet.SetActive(true);
         Invoke("PauseDelay", 2);
     }
