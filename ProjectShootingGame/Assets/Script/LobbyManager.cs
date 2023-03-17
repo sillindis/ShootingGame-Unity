@@ -83,6 +83,10 @@ public class LobbyManager : MonoBehaviour
         gameStartPopUp.SetActive(false);
     }
 
+    public void GoStoreScenes()
+    {
+        SceneManager.LoadScene("Store");
+    }
     public void GoHomeScenes()
     {
         DataManager.Instance.SaveGameData();

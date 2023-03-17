@@ -7,6 +7,10 @@ public class Bullet : MonoBehaviour
     public int dmg;
     public bool isRotate;
 
+    private void Start()
+    {
+        dmg += DataManager.Instance.data.damage;
+    }
     private void Update()
     {
         if (isRotate)

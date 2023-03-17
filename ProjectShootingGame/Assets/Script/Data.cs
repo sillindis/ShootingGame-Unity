@@ -7,7 +7,8 @@ using System;
 public class Data
 {
     public double coin;
-    public int upgrade;
+    public int level;
+    public int damage;
 
     public bool[] stageUnlock = new bool[3];
     public double[] stageScore = new double[3];

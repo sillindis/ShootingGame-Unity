@@ -170,10 +170,9 @@ public class Player : MonoBehaviour
                 rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 3:
-            default:
                 GameObject bulletRR = objectManager.MakeObj("BulletPlayerA");
                 bulletRR.transform.position = transform.position + Vector3.right * 0.25f;
-                GameObject bulletCC = objectManager.MakeObj("BulletPlayerB");
+                GameObject bulletCC = objectManager.MakeObj("BulletPlayerA");
                 bulletCC.transform.position = transform.position;
                 GameObject bulletLL = objectManager.MakeObj("BulletPlayerA");
                 bulletLL.transform.position = transform.position + Vector3.left * 0.25f;
@@ -186,6 +185,43 @@ public class Player : MonoBehaviour
                 rigidRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 rigidCC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 rigidLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                break;
+            case 4:
+                GameObject bulletUp = objectManager.MakeObj("BulletPlayerB");
+                bulletUp.transform.position = transform.position;
+                bulletUp.transform.rotation = Quaternion.Euler(0, 0, 90);
+                Rigidbody2D rigidUp = bulletUp.GetComponent<Rigidbody2D>();
+                rigidUp.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                break;
+            case 5:
+                GameObject bulletUpR = objectManager.MakeObj("BulletPlayerB");
+                bulletUpR.transform.position = transform.position + Vector3.right * 0.1f;
+                GameObject bulletUpL = objectManager.MakeObj("BulletPlayerB");
+                bulletUpL.transform.position = transform.position + Vector3.left * 0.1f;
+                bulletUpR.transform.rotation = Quaternion.Euler(0, 0, 90);
+                bulletUpL.transform.rotation = Quaternion.Euler(0, 0, 90);
+                Rigidbody2D rigidUpR = bulletUpR.GetComponent<Rigidbody2D>();
+                Rigidbody2D rigidUpL = bulletUpL.GetComponent<Rigidbody2D>();
+                rigidUpR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                rigidUpL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                break;
+            case 6:
+            default:
+                GameObject bulletUpRR = objectManager.MakeObj("BulletPlayerA");
+                bulletUpRR.transform.position = transform.position + Vector3.right * 0.25f;
+                GameObject bulletUpCC = objectManager.MakeObj("BulletPlayerB");
+                bulletUpCC.transform.position = transform.position;
+                GameObject bulletUpLL = objectManager.MakeObj("BulletPlayerA");
+                bulletUpLL.transform.position = transform.position + Vector3.left * 0.25f;
+                bulletUpRR.transform.rotation = Quaternion.Euler(0, 0, 90);
+                bulletUpCC.transform.rotation = Quaternion.Euler(0, 0, 90);
+                bulletUpLL.transform.rotation = Quaternion.Euler(0, 0, 90);
+                Rigidbody2D rigidUpRR = bulletUpRR.GetComponent<Rigidbody2D>();
+                Rigidbody2D rigidUpCC = bulletUpCC.GetComponent<Rigidbody2D>();
+                Rigidbody2D rigidUpLL = bulletUpLL.GetComponent<Rigidbody2D>();
+                rigidUpRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                rigidUpCC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                rigidUpLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
         }
 
