@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: B
-  enemyScore: 50000
+  enemyScore: 5000
   speed: 1.5
-  health: 1000
+  health: 10000
   maxShotDelay: 0
   curShotDelay: 0
   bulletObjA: {fileID: 0}

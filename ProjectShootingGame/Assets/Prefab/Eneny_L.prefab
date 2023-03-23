@@ -158,9 +158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: L
-  enemyScore: 5000
+  enemyScore: 500
   speed: 1
-  health: 40
+  health: 400
   maxShotDelay: 3
   curShotDelay: 0
   bulletObjA: {fileID: 2484475823275839565, guid: e72b97efe1ec162488811daa65176572, type: 3}

@@ -38,17 +38,17 @@ public class Enemy : MonoBehaviour
         switch (enemyName)
         {
             case "B":
-                health = 1000;
+                health = 10000;
                 Invoke("Stop", 2);
                 break;
             case "L":
-                health = 40;
+                health = 400;
                 break;
             case "M":
-                health = 25;
+                health = 250;
                 break;
             case "S":
-                health = 10;
+                health = 100;
                 break;
         }
         ReturnSprite();

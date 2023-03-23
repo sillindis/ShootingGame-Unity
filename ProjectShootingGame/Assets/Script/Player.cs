@@ -65,6 +65,9 @@ public class Player : MonoBehaviour
         Fire(); //Shot Bullet
         FireReload();
         Boom(); //Shot Boom
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Boom();
     }
 
     private void Move()

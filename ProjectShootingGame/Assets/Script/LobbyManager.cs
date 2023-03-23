@@ -85,6 +85,7 @@ public class LobbyManager : MonoBehaviour
 
     public void GoStoreScenes()
     {
+        DataManager.Instance.LoadStoreData();
         SceneManager.LoadScene("Store");
     }
     public void GoHomeScenes()

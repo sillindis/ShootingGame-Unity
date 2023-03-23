@@ -162,9 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: S
-  enemyScore: 2000
+  enemyScore: 200
   speed: 2
-  health: 10
+  health: 100
   maxShotDelay: 3
   curShotDelay: 0
   bulletObjA: {fileID: 2484475823275839565, guid: 3136acd4f7d513249a5f7c11420d1167, type: 3}
