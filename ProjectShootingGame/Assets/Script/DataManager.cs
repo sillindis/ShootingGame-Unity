@@ -30,7 +30,6 @@ public class DataManager : MonoBehaviour
     public void LoadGameData()
     {
         string filePath = Application.streamingAssetsPath + "/" + dataFileName;
-        Debug.Log(filePath);
 
         if (File.Exists(filePath))
         {
@@ -64,8 +63,6 @@ public class DataManager : MonoBehaviour
     {
         string toJsonData = JsonUtility.ToJson(data, true);
         string filePath = Application.streamingAssetsPath + "/" + dataFileName;
-
-        Debug.Log(toJsonData);//json 데이터 출력
 
         //이미 저장된 파일이 있다면 덮어쓰기
         File.WriteAllText(filePath, toJsonData);

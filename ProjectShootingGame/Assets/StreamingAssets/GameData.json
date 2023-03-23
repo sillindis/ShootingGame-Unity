@@ -1,14 +1,14 @@
 {
-    "coin": 10.0,
-    "level": 4,
-    "damage": 6,
+    "coin": 100.0,
+    "level": 0,
+    "damage": 0,
     "stageUnlock": [
         true,
-        true,
+        false,
         false
     ],
     "stageScore": [
-        53200.0,
+        0.0,
         0.0,
         0.0
     ]

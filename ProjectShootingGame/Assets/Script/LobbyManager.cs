@@ -82,6 +82,11 @@ public class LobbyManager : MonoBehaviour
         IsPause = false;
         gameStartPopUp.SetActive(false);
     }
+    public void GoScoreScenes()
+    {
+        DataManager.Instance.LoadStoreData();
+        SceneManager.LoadScene("Score");
+    }
 
     public void GoStoreScenes()
     {

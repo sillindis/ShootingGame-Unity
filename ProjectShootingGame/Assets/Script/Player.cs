@@ -59,7 +59,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("coin: " + coin);
         Move();
         Move1();
         Fire(); //Shot Bullet
