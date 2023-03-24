@@ -29,7 +29,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadGameData()
     {
-        string filePath = Application.streamingAssetsPath + "/" + dataFileName;
+        string filePath = Application.persistentDataPath + "/" + dataFileName; //streamingAssetsPath
 
         if (File.Exists(filePath))
         {
@@ -44,8 +44,7 @@ public class DataManager : MonoBehaviour
     }
     public void LoadStoreData()
     {
-        string filePath = Application.streamingAssetsPath + "/" + storeDataFileName;
-        Debug.Log(filePath);
+        string filePath = Application.persistentDataPath + "/" + storeDataFileName;
 
         if (File.Exists(filePath))
         {
@@ -62,7 +61,7 @@ public class DataManager : MonoBehaviour
     public void SaveGameData()
     {
         string toJsonData = JsonUtility.ToJson(data, true);
-        string filePath = Application.streamingAssetsPath + "/" + dataFileName;
+        string filePath = Application.persistentDataPath + "/" + dataFileName;
 
         //이미 저장된 파일이 있다면 덮어쓰기
         File.WriteAllText(filePath, toJsonData);
@@ -73,9 +72,7 @@ public class DataManager : MonoBehaviour
     public void SaveStoreData()
     {
         string toJsonData = JsonUtility.ToJson(storeData, true);
-        string filePath = Application.streamingAssetsPath + "/" + storeDataFileName;
-
-        Debug.Log(toJsonData);//json 데이터 출력
+        string filePath = Application.persistentDataPath + "/" + storeDataFileName;
 
         //이미 저장된 파일이 있다면 덮어쓰기
         File.WriteAllText(filePath, toJsonData);

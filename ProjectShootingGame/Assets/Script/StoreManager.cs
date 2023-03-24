@@ -19,6 +19,14 @@ public class StoreManager : MonoBehaviour
         UpdateText();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoLobbyScence();
+        }
+    }
+
     public void Upgrade()
     {
         //## MAX 레벨 예외처리 해줘야함
@@ -73,7 +81,6 @@ public class StoreManager : MonoBehaviour
 
     public void GoLobbyScence()
     {
-        Debug.Log("로비로 이동");
         DataManager.Instance.SaveGameData();
         DataManager.Instance.SaveStoreData();
         SceneManager.LoadScene("Lobby");

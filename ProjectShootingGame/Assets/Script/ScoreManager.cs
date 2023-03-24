@@ -21,6 +21,13 @@ public class ScoreManager : MonoBehaviour
         TextMeshProUGUI score3 = Score[2].GetComponent<TextMeshProUGUI>();
         score3.text = (DataManager.Instance.data.stageScore[2]).ToString();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoLobbyScence();
+        }
+    }
 
     public void GoLobbyScence()
     {

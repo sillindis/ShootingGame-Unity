@@ -128,6 +128,11 @@ public class GameManager : MonoBehaviour
     // public 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+
         curSpawnDelay += Time.deltaTime;
 
         if (curSpawnDelay > nextSpawnDelay && !spawnEnd) //Create enemies every random time

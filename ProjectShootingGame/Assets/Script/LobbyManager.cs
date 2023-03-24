@@ -33,6 +33,14 @@ public class LobbyManager : MonoBehaviour
         Text coinText = coin.GetComponent<Text>();
         coinText.text = (DataManager.Instance.data.coin).ToString();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            HomePopUp();
+        }
+    }
+
 
     public void HomePopUp()
     {
@@ -84,7 +92,7 @@ public class LobbyManager : MonoBehaviour
     }
     public void GoScoreScenes()
     {
-        DataManager.Instance.LoadStoreData();
+        DataManager.Instance.LoadGameData();
         SceneManager.LoadScene("Score");
     }
 
