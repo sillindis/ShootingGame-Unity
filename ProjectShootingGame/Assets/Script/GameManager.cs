@@ -314,6 +314,7 @@ public class GameManager : MonoBehaviour
 
     public void GameHome()
     {
+        MusicManager.Instance.MusicChangeBackGround();
         SceneManager.LoadScene("Lobby");
     }
 }

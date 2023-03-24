@@ -12,4 +12,8 @@ public class Data
 
     public bool[] stageUnlock = new bool[3];
     public double[] stageScore = new double[3];
+
+    public float musicVolume;
+    public bool musicOn;
+
 }

@@ -37,7 +37,7 @@ public class StartManager : MonoBehaviour
         }
     }
 
-    void PlayerStop()
+    void PlayerStop() //플레이어 연출
     {
         rigid.velocity = Vector2.zero;
     }
@@ -52,7 +52,7 @@ public class StartManager : MonoBehaviour
         resetButton.SetActive(true);
     }
 
-    public void ResetPopUp()
+    public void ResetPopUp() // 팝업: 리셋
     {
         if (IsPause != false)
             return;
@@ -62,7 +62,7 @@ public class StartManager : MonoBehaviour
         resetPopUp.SetActive(true);
     }
 
-    public void ResetPopUpCancle()
+    public void ResetPopUpCancle() //팝업: 리셋 닫기
     {
         if (IsPause != true)
             return;
@@ -71,7 +71,7 @@ public class StartManager : MonoBehaviour
         IsPause = false;
         resetPopUp.SetActive(false);
     }
-    public void ResetButton()
+    public void ResetButton() //리셋 버튼 눌렀을때
     {
         //reset data
         DataManager.Instance.data.coin = 200.0;
@@ -86,6 +86,9 @@ public class StartManager : MonoBehaviour
         {
             DataManager.Instance.data.stageScore[i] = 0.0;
         }
+        DataManager.Instance.data.musicVolume = 0.7f;
+        DataManager.Instance.data.musicOn = true;
+        MusicManager.Instance.MusicRestore(); //음악 설정 복구
 
         DataManager.Instance.storeData.level = 1;
         DataManager.Instance.storeData.damage = 0;
@@ -102,12 +105,12 @@ public class StartManager : MonoBehaviour
         Invoke("TextPopUp", 1);
     }
 
-    public void TextPopUp()
+    public void TextPopUp() //리셋 완료후 메시지 띄우기
     {
         textPopUp.SetActive(false);
     }
 
-    public void Exit()
+    public void Exit() //exit 버튼 눌렀을때
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false; //eitor exit
@@ -116,7 +119,7 @@ public class StartManager : MonoBehaviour
 #endif
     }
 
-    public void StartAnim()
+    public void StartAnim() //스타트 버튼 띄우는 애니메이션
     {
         startTextAnim.SetTrigger("OnStart");
     }

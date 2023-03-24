@@ -27,7 +27,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void LoadGameData()
+    public void LoadGameData() //유저 데이터 Load
     {
         string filePath = Application.persistentDataPath + "/" + dataFileName; //streamingAssetsPath
 
@@ -42,7 +42,7 @@ public class DataManager : MonoBehaviour
             Debug.LogError("데이터 불러오기 실패");
         }
     }
-    public void LoadStoreData()
+    public void LoadStoreData() //상점 데이터 Load
     {
         string filePath = Application.persistentDataPath + "/" + storeDataFileName;
 
@@ -58,7 +58,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void SaveGameData()
+    public void SaveGameData() //유저 데이터 Save
     {
         string toJsonData = JsonUtility.ToJson(data, true);
         string filePath = Application.persistentDataPath + "/" + dataFileName;
@@ -69,7 +69,7 @@ public class DataManager : MonoBehaviour
         Debug.Log("데이터 저장완료");
     }
 
-    public void SaveStoreData()
+    public void SaveStoreData() //상점 데이터 Save
     {
         string toJsonData = JsonUtility.ToJson(storeData, true);
         string filePath = Application.persistentDataPath + "/" + storeDataFileName;
@@ -80,10 +80,10 @@ public class DataManager : MonoBehaviour
         Debug.Log("상점데이터 저장완료");
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationQuit() //앱 종료시 데이터 저장
     {
         DataManager.Instance.SaveGameData();
-        //DataManager.Instance.SaveStoreData();
+        DataManager.Instance.SaveStoreData();
 
         Debug.Log("게임종료");
     }

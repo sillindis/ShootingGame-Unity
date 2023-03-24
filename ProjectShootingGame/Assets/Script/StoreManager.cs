@@ -21,7 +21,7 @@ public class StoreManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))//모바일에서 뒤로가기시
         {
             GoLobbyScence();
         }
@@ -55,7 +55,7 @@ public class StoreManager : MonoBehaviour
         }
     }
 
-    public void UpdateText()
+    public void UpdateText() //상점에 있는 text 업데이트
     {
         TextMeshProUGUI tl = textLevel.GetComponent<TextMeshProUGUI>();
         tl.text = (DataManager.Instance.storeData.level).ToString();
@@ -67,19 +67,20 @@ public class StoreManager : MonoBehaviour
         tp.text = (DataManager.Instance.storeData.price).ToString();
         if(DataManager.Instance.data.coin < DataManager.Instance.storeData.price)
         {
-            tp.color = Color.red;
+            tp.color = Color.red; // 업그레이드에 필요한 가격에 미치지 못할 경우 빨간색으로 바꾸기
         }
 
+        // 업그레이드시 코인 부족할 경우 경고메시지 띄우기
         TextMeshProUGUI tc = textCoin.GetComponent<TextMeshProUGUI>();
         tc.text = (DataManager.Instance.data.coin).ToString();
     }
 
-    public void DiasspearText()
+    public void DiasspearText() // 업그레이드시 코인 부족할 경우 경고메시지 띄운거 닫기
     {
         textNotUpgrade.SetActive(false);
     }
 
-    public void GoLobbyScence()
+    public void GoLobbyScence() //로비로 갈때 데이터 저장후 이동
     {
         DataManager.Instance.SaveGameData();
         DataManager.Instance.SaveStoreData();
