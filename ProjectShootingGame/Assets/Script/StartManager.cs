@@ -82,7 +82,7 @@ public class StartManager : MonoBehaviour
         {
             DataManager.Instance.data.stageUnlock[i] = false;
         }
-        for (int i = 0; i < DataManager.Instance.data.stageUnlock.Length; i++)
+        for (int i = 0; i < DataManager.Instance.data.stageScore.Length; i++)
         {
             DataManager.Instance.data.stageScore[i] = 0.0;
         }

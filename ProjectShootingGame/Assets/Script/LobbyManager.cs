@@ -25,9 +25,10 @@ public class LobbyManager : MonoBehaviour
     public GameObject settingPopUp;
     public GameObject musicPopUp;
     public GameObject musicVolume;
-    public GameObject musicOnCheck;
+    public Toggle musicToggle;
     bool IsPause;
     bool isSetting;
+    bool IsToggle;
 
     string stageName;
 
@@ -58,12 +59,13 @@ public class LobbyManager : MonoBehaviour
 
         Slider slider = musicVolume.GetComponent<Slider>();
         slider.value = DataManager.Instance.data.musicVolume;
-        Debug.Log("DataManager.Instance.data.musicOn: " + DataManager.Instance.data.musicOn);
-        if (DataManager.Instance.data.musicOn == true)
-            musicOnCheck.SetActive(true);
-        else
-            musicOnCheck.SetActive(false);
 
+        IsToggle = true;
+        if (DataManager.Instance.data.musicOn == false)
+        {
+            IsToggle = false;
+            musicToggle.isOn = false;
+        }
     }
     private void Update()
     {
@@ -110,7 +112,7 @@ public class LobbyManager : MonoBehaviour
         //gameStartPopUp의 UI text를 변경
         GameObject child = gameStartPopUp.transform.GetChild(0).gameObject;
         Text childText = child.GetComponent<Text>();
-        childText.text = "Fly " + stageName +"?";
+        childText.text = "Fly " + stageName + "?";
     }
 
     public void GameStartPopUpCancle() //팝업: 게임 시작 닫기
@@ -125,7 +127,7 @@ public class LobbyManager : MonoBehaviour
 
     public void SettingPopUp()
     {
-        if(isSetting == false)
+        if (isSetting == false)
         {
             Time.timeScale = 0;
             settingPopUp.SetActive(true);
@@ -162,10 +164,13 @@ public class LobbyManager : MonoBehaviour
     }
     public void MusicCheck() //뮤직ui On off 체크
     {
+        if (IsToggle == false) // 로비 켜지고나서 토글 isOn= false 시킬때 작동되는걸 방지하기위함
+        {
+            IsToggle = true;
+            return;
+        }
         MusicManager.Instance.MusiceCheck();
         DataManager.Instance.SaveGameData();
-
-        musicOnCheck.SetActive(!musicOnCheck.activeSelf);
     }
 
     public void MusicVolume(float vol) //뮤직 볼륨 조절

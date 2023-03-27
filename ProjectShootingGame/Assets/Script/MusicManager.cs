@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    static GameObject container;
+    //static GameObject container;
     static MusicManager instance;
 
     public AudioClip background;
@@ -30,12 +30,7 @@ public class MusicManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else
-        {
-            if (instance != null)
-            {
-                Destroy(this.gameObject);
-            }
-        }
+            Destroy(this.gameObject);
 
         musicSource = GetComponent<AudioSource>();
 
@@ -43,19 +38,15 @@ public class MusicManager : MonoBehaviour
         musicVolume = DataManager.Instance.data.musicVolume; //이전 유저데이터 음악 볼륨 적용
 
         if (DataManager.Instance.data.musicOn == true) // //이전 유저데이터 음악 on off 적용
-        {
-            musicSource.mute = false;
             musicSource.Play();
-        }
         else
-            musicSource.mute = true;
+            musicSource.Stop();
     }
 
-    private void Update()
+    public void Update()
     {
         musicSource.volume = musicVolume;
     }
-
     public void MusicChangeBattle() //배틀 음악으로 변경
     {
         musicSource.clip = battle;
@@ -70,24 +61,29 @@ public class MusicManager : MonoBehaviour
 
     public void MusiceCheck() //음악 ON/OFF
     {
-        musicSource.mute = !musicSource.mute;
-        if (musicSource.mute == true)
+        if (musicSource.isPlaying)
+        {
+            musicSource.Stop();
             DataManager.Instance.data.musicOn = false;
+        }
         else
+        {
+            musicSource.Play();
             DataManager.Instance.data.musicOn = true;
+        }
     }
 
     public void SetVolume(float vol) //음악 볼륨 조절
     {
         musicVolume = vol;
         DataManager.Instance.data.musicVolume = musicVolume;
+        
     }
 
     public void MusicRestore()
     {
         musicSource.Stop();
         musicSource.Play();
-        musicSource.mute = false;
         musicVolume = DataManager.Instance.data.musicVolume;
     }
 }

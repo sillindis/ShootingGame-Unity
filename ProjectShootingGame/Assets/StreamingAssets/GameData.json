@@ -1,0 +1,17 @@
+{
+    "coin": 200.0,
+    "level": 1,
+    "damage": 0,
+    "stageUnlock": [
+        true,
+        false,
+        false
+    ],
+    "stageScore": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "musicVolume": 0.32053571939468386,
+    "musicOn": false
+}
